@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "678139874686",
+    "project_id": "ekacheri",
+    "storage_bucket": "ekacheri.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:678139874686:android:f41a2166c90481fb33b72f",
+        "android_client_info": {
+          "package_name": "com.cmdu.ekacheri"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "678139874686-pojnkovo57ucb41aa3jt8j8hhshag4qb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMX27whpLfOWYwjFIAzqLw6hhJI1J-GAk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "678139874686-pojnkovo57ucb41aa3jt8j8hhshag4qb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
