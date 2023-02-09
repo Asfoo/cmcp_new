@@ -67,6 +67,8 @@ class Auth extends BaseApi with ChangeNotifier {
     String fcmToken,
   ) async {
     try {
+      print(email);
+      print(password);
       var response = await api.httpPost(
         'login',
         {'email': email, 'password': password, 'fcm_token': fcmToken},

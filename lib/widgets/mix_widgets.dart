@@ -345,6 +345,22 @@ Column phoneVerficationCol(BuildContext context) {
         ),
       ),
       16.height,
+      Padding(
+        padding: const EdgeInsets.only(left: 16, right: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Note : ', style: boldTextStyle(color: redColor, size: 18)),
+            16.height,
+            Expanded(
+              child: Text(
+                  'In case of incorrect phone number, kindly change it from profile update.',
+                  style: secondaryTextStyle(color: errorColor)),
+            ),
+          ],
+        ),
+      ),
     ],
   );
 }

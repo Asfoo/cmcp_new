@@ -39,12 +39,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   var _userData = {
     'name': '',
     'cnic': '',
+    'contact_no': '',
     'gender': '',
     'address': '',
     'district_id': '',
   };
   var maskFormatter = new MaskTextInputFormatter(
       mask: '#####-#######-#', filter: {"#": RegExp(r'[0-9]')});
+
+  var mobileFormatter = new MaskTextInputFormatter(
+      mask: '##########', initialText: '+92', filter: {"#": RegExp(r'[0-9]')});
 
   File _userImageFile;
   void _pickedImage(File image) {
@@ -76,9 +80,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     if (_isInit) {
       _loadDistricts();
       _editUser = Provider.of<Auth>(context, listen: false).user;
+
+      print("User Contact Number ${_editUser.contactNo}");
       _userData = {
         'name': _editUser.name,
         'cnic': _editUser.cnic,
+        'contact_no': _editUser.contactNo,
         'gender': _editUser.gender,
         'address': _editUser.address,
         'district_id': _editUser.districtId.toString(),
@@ -194,7 +201,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         _userData['name'] = val;
                                       },
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow  (
+                                        FilteringTextInputFormatter.allow(
                                             RegExp("[a-zA-Z ]")),
                                       ],
                                     ),
@@ -219,6 +226,30 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       _userData['cnic'] = val;
                                     },
                                     inputFormatters: [maskFormatter],
+                                  )),
+                                ),
+                                Divider(
+                                  thickness: 1,
+                                ),
+                                cTextLabel('Mobile #', 'موبائل نمبر'),
+                                padTextField(
+                                  child: padTextField(
+                                      child: comEditTextInit(
+                                    initValue: _userData['contact_no'],
+                                    hintText: '+923333333',
+                                    validator: (value) {
+                                      if (value.isEmpty || value.length < 10) {
+                                        return 'Number is invalid!';
+                                      }
+                                    },
+                                    textInputType: TextInputType.number,
+                                    value: (val) {
+                                      _userData['contact_no'] = "+92" + val;
+
+                                      print(
+                                          "Contact Number ${_userData['contact_no']}");
+                                    },
+                                    inputFormatters: [mobileFormatter],
                                   )),
                                 ),
                                 Divider(
