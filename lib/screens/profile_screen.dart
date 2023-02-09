@@ -48,7 +48,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       mask: '#####-#######-#', filter: {"#": RegExp(r'[0-9]')});
 
   var mobileFormatter = new MaskTextInputFormatter(
-      mask: '##########', initialText: '+92', filter: {"#": RegExp(r'[0-9]')});
+      mask: '##########', filter: {"#": RegExp(r'[0-9]')});
 
   File _userImageFile;
   void _pickedImage(File image) {
@@ -235,8 +235,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 padTextField(
                                   child: padTextField(
                                       child: comEditTextInit(
-                                    initValue: _userData['contact_no'],
-                                    hintText: '+923333333',
+                                    initValue: _userData['contact_no']
+                                        .substring(3, 13),
+                                    hintText: '33312345',
                                     validator: (value) {
                                       if (value.isEmpty || value.length < 10) {
                                         return 'Number is invalid!';
