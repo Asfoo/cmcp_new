@@ -5,10 +5,12 @@ import 'package:cmcp/widgets/otp_field.dart';
 import 'package:flutter/material.dart';
 import 'package:cmcp/model/http_exception.dart';
 import 'package:cmcp/providers/auth.dart';
+import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:cmcp/theme_utils/colors.dart';
 import 'package:cmcp/main_theme/utils/AppWidget.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../theme_utils/fontsSize.dart';
 import 'package:cmcp/theme_utils/T3widgets.dart';
 
@@ -185,6 +187,9 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
                               textContent: 'Send Verification Code',
                               onPressed: _sendVCode),
                 ),
+                Divider(
+                  thickness: 1,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16, right: 16),
                   child: Row(
@@ -202,11 +207,81 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
                     ],
                   ),
                 ),
+                SizedBox(height: 10),
+                _allow
+                    ? Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16, right: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Note : ',
+                                    style: boldTextStyle(
+                                        color: redColor, size: 18)),
+                                16.height,
+                                Expanded(
+                                  child: Text(
+                                      'In case OTP is not recieved, kindly call on 03188170841 for OTP.',
+                                      style: secondaryTextStyle(
+                                          color: errorColor)),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16, right: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: padTextField(
+                                    child: Text(
+                                      "آپکا کوڈ موصول نہ ہونے کی صورت میں 03188170841 پر رابطہ کریں",
+                                      textAlign: TextAlign.right,
+                                      style: TextStyle(
+                                          color: redColor,
+                                          fontFamily: fontMedium,
+                                          fontSize: textSizeSmall),
+                                    ),
+                                  ),
+                                ),
+                                Text(' : نوٹ ',
+                                    style: boldTextStyle(
+                                        color: redColor, size: 18)),
+                                16.height,
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
               ],
             ),
           ),
         ),
       ),
+      floatingActionButton: _allow
+          ? FloatingActionButton(
+              child: Icon(Icons.whatsapp),
+              backgroundColor: Colors.green,
+              onPressed: () {
+                var whatsappUrl = "whatsapp://send?phone=+923188170841" +
+                    "&text=${Uri.encodeComponent("Hello, I need OTP")}";
+                try {
+                  launch(whatsappUrl);
+                } catch (e) {
+                  //To handle error and display error message
+                  Get.snackbar("Whatsapp", "Unable to open Whatsapp");
+                }
+              },
+            )
+          : SizedBox(),
     );
   }
 }
