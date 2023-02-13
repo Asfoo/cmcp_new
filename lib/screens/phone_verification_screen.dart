@@ -11,6 +11,7 @@ import 'package:cmcp/theme_utils/colors.dart';
 import 'package:cmcp/main_theme/utils/AppWidget.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../model/user.dart';
 import '../theme_utils/fontsSize.dart';
 import 'package:cmcp/theme_utils/T3widgets.dart';
 
@@ -26,6 +27,36 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
   var _isLoading = false;
   var _allow = false;
   String _otp = '';
+
+  User _editUser;
+  void didChangeDependencies() {
+    if (_isInit) {
+      _editUser = Provider.of<Auth>(context, listen: false).user;
+
+      print("User Contact Number ${_editUser.contactNo}");
+      _userData = {
+        'name': _editUser.name,
+        'cnic': _editUser.cnic,
+        'contact_no': _editUser.contactNo,
+        'gender': _editUser.gender,
+        'address': _editUser.address,
+        'district_id': _editUser.districtId.toString(),
+      };
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
+  var _isInit = true;
+  var _userData = {
+    'name': '',
+    'cnic': '',
+    'contact_no': '',
+    'gender': '',
+    'address': '',
+    'district_id': '',
+  };
+
   Future<void> _sendVCode() async {
     setState(() {
       _isLoading = true;
@@ -272,7 +303,7 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
               backgroundColor: Colors.green,
               onPressed: () {
                 var whatsappUrl = "whatsapp://send?phone=+923188170841" +
-                    "&text=${Uri.encodeComponent("Hello, I need OTP")}";
+                    "&text=${Uri.encodeComponent("I need OTP for my CMC Portal \n My details are :- \n Name : ${_userData['name']} \n CNIC: ${_userData['cnic']} \n Contact No : ${_userData['contact_no']}   ")}";
                 try {
                   launch(whatsappUrl);
                 } catch (e) {
