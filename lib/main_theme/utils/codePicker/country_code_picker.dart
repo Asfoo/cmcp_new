@@ -42,21 +42,21 @@ class CountryCodePicker extends StatefulWidget {
   final List<String> countryFilter;
 
   CountryCodePicker({
-    this.onChanged,
-    this.onInit,
-    this.initialSelection,
+    required this.onChanged,
+    required this.onInit,
+    required this.initialSelection,
     this.favorite = const [],
     this.countryFilter = const [],
-    this.textStyle,
+    required this.textStyle,
     this.padding = const EdgeInsets.all(0.0),
     this.showCountryOnly = false,
     this.searchDecoration = const InputDecoration(),
-    this.searchStyle,
-    this.emptySearchBuilder,
+    required this.searchStyle,
+    required this.emptySearchBuilder,
     this.showOnlyCountryWhenClosed = false,
     this.alignLeft = false,
     this.showFlag = true,
-    this.builder,
+    required this.builder,
   });
 
   @override
@@ -82,11 +82,11 @@ class CountryCodePicker extends StatefulWidget {
 }
 
 class _CountryCodePickerState extends State<CountryCodePicker> {
-  CountryCode selectedItem;
+  CountryCode ?selectedItem;
   List<CountryCode> elements = [];
   List<CountryCode> favoriteElements = [];
 
-  _CountryCodePickerState(this.elements);
+  _CountryCodePickerState(this.elements) ;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +94,7 @@ class _CountryCodePickerState extends State<CountryCodePicker> {
     if (widget.builder != null)
       _widget = InkWell(
         onTap: _showSelectionDialog,
-        child: widget.builder(selectedItem),
+        child: widget.builder(selectedItem!),
       );
     else {
       _widget = TextButton(
@@ -115,7 +115,7 @@ class _CountryCodePickerState extends State<CountryCodePicker> {
                           ? const EdgeInsets.only(right: 8.0, left: 8.0)
                           : const EdgeInsets.only(right: 8.0),
                       child: CachedNetworkImage(
-                        imageUrl: selectedItem.flagUri,
+                        imageUrl: selectedItem!.flagUri,
                         width: 25.0,
                       ),
                     ),
@@ -123,7 +123,7 @@ class _CountryCodePickerState extends State<CountryCodePicker> {
                 : Container(),
             Flexible(
               fit: widget.alignLeft ? FlexFit.tight : FlexFit.loose,
-              child: text(selectedItem.toCountryCodeString(),
+              child: text(selectedItem!.toCountryCodeString(),
                   textColor: appStore.textPrimaryColor, fontSize: 16.0),
             ),
           ],
@@ -163,13 +163,13 @@ class _CountryCodePickerState extends State<CountryCodePicker> {
     }
 
     //Change added: get the initial entered country information
-    _onInit(selectedItem);
+    _onInit(selectedItem!);
 
     favoriteElements = elements
         .where((e) =>
             widget.favorite.firstWhere(
                 (f) => e.code == f.toUpperCase() || e.dialCode == f.toString(),
-                orElse: () => null) !=
+                orElse: () => null!) !=
             null)
         .toList();
     super.initState();

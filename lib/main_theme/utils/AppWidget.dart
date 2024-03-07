@@ -14,7 +14,7 @@ import 'AppConstant.dart';
 Widget text(
   String text, {
   var fontSize = textSizeLargeMedium,
-  Color textColor,
+  Color? textColor,
   var fontFamily,
   var isCentered = TextAlign.center,
   var maxLine = 1,
@@ -45,7 +45,7 @@ Widget text(
 BoxDecoration boxDecoration(
     {double radius = 2,
     Color color = Colors.transparent,
-    Color bgColor,
+    Color? bgColor,
     var showShadow = false}) {
   return BoxDecoration(
     color: bgColor ?? appStore.scaffoldBackground,
@@ -68,7 +68,7 @@ void changeStatusColor(Color color) async {
 }
 
 Widget commonCacheImageWidget(String url, double height,
-    {double width, BoxFit fit}) {
+    {double? width, BoxFit? fit}) {
   if (url.validate().startsWith('http')) {
     if (isMobile) {
       return CachedNetworkImage(
@@ -87,12 +87,12 @@ Widget commonCacheImageWidget(String url, double height,
 }
 
 Widget settingItem(context, String text,
-    {Function onTap,
-    Widget detail,
-    Widget leading,
-    Color textColor,
-    int textSize,
-    double padding}) {
+    {Function? onTap,
+    Widget? detail,
+    Widget? leading,
+    Color ?textColor,
+    int? textSize,
+    double? padding}) {
   return InkWell(
     onTap: onTap,
     child: Container(
@@ -125,7 +125,7 @@ Widget settingItem(context, String text,
 }
 
 Widget appBarTitleWidget(context, String title,
-    {Color color, Color textColor}) {
+    {Color? color, Color? textColor}) {
   return Container(
     width: MediaQuery.of(context).size.width,
     height: 60,
@@ -144,11 +144,11 @@ Widget appBarTitleWidget(context, String title,
 }
 
 Widget appBar(BuildContext context, String title,
-    {List<Widget> actions,
+    {List<Widget> ? actions,
     bool showBack = true,
-    Color color,
-    Color iconColor,
-    Color textColor}) {
+    Color?  color,
+    Color ? iconColor,
+    Color ? textColor}) {
   return AppBar(
     automaticallyImplyLeading: false,
     backgroundColor: color ?? appStore.appBarColor,
@@ -168,7 +168,7 @@ Widget appBar(BuildContext context, String title,
 
 class ExampleItemWidget extends StatelessWidget {
   final ListModel tabBarType;
-  final Function onTap;
+  final Function? onTap;
   final bool showTrailing;
 
   ExampleItemWidget(this.tabBarType,
@@ -182,8 +182,8 @@ class ExampleItemWidget extends StatelessWidget {
       elevation: 2.0,
       shadowColor: Colors.black,
       child: ListTile(
-        onTap: () => onTap(),
-        title: Text(tabBarType.name, style: boldTextStyle()),
+        onTap: () => onTap,
+        title: Text(tabBarType.name!, style: boldTextStyle()),
         trailing: showTrailing
             ? Icon(Icons.arrow_forward_ios,
                 size: 15, color: appStore.textPrimaryColor)
@@ -205,7 +205,7 @@ String convertDate(date) {
 }
 
 class CustomTheme extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
 
   CustomTheme({@required this.child});
 
@@ -214,11 +214,11 @@ class CustomTheme extends StatelessWidget {
     return Theme(
       data: appStore.isDarkModeOn
           ? ThemeData.dark().copyWith(
-              accentColor: appColorPrimary,
-              backgroundColor: appStore.scaffoldBackground,
+              // accentColor: appColorPrimary,
+              // backgroundColor: appStore.scaffoldBackground,
             )
           : ThemeData.light(),
-      child: child,
+      child: child!,
     );
   }
 }
@@ -229,7 +229,7 @@ Function(BuildContext, String) placeholderWidgetFn() =>
 Widget placeholderWidget() =>
     Image.asset('assets/images/theme3/grey.jpg', fit: BoxFit.cover);
 
-BoxConstraints dynamicBoxConstraints({double maxWidth}) {
+BoxConstraints dynamicBoxConstraints({double? maxWidth}) {
   return BoxConstraints(maxWidth: maxWidth ?? applicationMaxWidth);
 }
 
@@ -273,7 +273,7 @@ String getBannerAdUnitId() {
       return bannerAdIdForAndroid;
     }
   }
-  return null;
+  return "";
 }
 
 String getInterstitialAdUnitId() {
@@ -290,17 +290,17 @@ String getInterstitialAdUnitId() {
       return InterstitialAdIdForAndroid;
     }
   }
-  return null;
+  return "";
 }
 
 String parseHtmlString(String htmlString) {
-  return parse(parse(htmlString).body.text).documentElement.text;
+  return parse(parse(htmlString).body!.text).documentElement!.text;
 }
 
 class ContainerX extends StatelessWidget {
-  final Widget mobile;
-  final Widget web;
-  final bool useFullWidth;
+  final Widget? mobile;
+  final Widget? web;
+  final bool? useFullWidth;
 
   ContainerX({this.mobile, this.web, this.useFullWidth});
 

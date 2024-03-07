@@ -36,15 +36,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _addressController = TextEditingController();
   final _emailController = TextEditingController();
   final _confController = TextEditingController();
-  PageController pageController;
+  PageController? pageController;
   var _isInit = true;
   var _isLoading = false;
   var _isLoading2 = false;
   var _error = '';
   int pageChanged = 0;
   bool _disable = false;
-  KeyValueModel _selectGender = null;
-  KeyValueModel _selectDistrict = null;
+  KeyValueModel? _selectGender ;
+  KeyValueModel ? _selectDistrict;
 
   var _regData = {
     'name': '',
@@ -64,7 +64,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     KeyValueModel(key: "Other", value: "Other"),
   ];
 
-  List<KeyValueModel> _districtValues;
+  List<KeyValueModel> ?_districtValues;
 
   var maskFormatter = new MaskTextInputFormatter(
       mask: '#####-#######-#', filter: {"#": RegExp(r'[0-9]')});
@@ -91,11 +91,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   void _submit1() async {
-    if (!this._formKey1.currentState.validate()) {
+    if (!this._formKey1.currentState!.validate()) {
       return;
     }
-    _formKey1.currentState.save();
-    pageController.nextPage(
+    _formKey1.currentState!.save();
+    pageController!.nextPage(
       duration: Duration(milliseconds: 250),
       curve: Curves.easeInCirc,
     );
@@ -103,10 +103,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   void _register() async {
-    if (!_formKey2.currentState.validate()) {
+    if (!_formKey2.currentState!.validate()) {
       return;
     }
-    _formKey2.currentState.save();
+    _formKey2.currentState!.save();
     showLoading();
     try {
       await Provider.of<Auth>(context, listen: false).register(_regData);
@@ -137,7 +137,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   void initState() {
     _firebaseMessaging.getToken().then((token) {
-      _regData['fcm_token'] = token;
+      _regData['fcm_token'] = token!;
     });
     super.initState();
   }
@@ -345,7 +345,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                                         padTextField(
                                                           child: searchDropDown(
                                                             selectedItem:
-                                                                _selectGender,
+                                                                _selectGender!,
                                                             itemList:
                                                                 _genderValues,
                                                             hint:
@@ -408,9 +408,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                                         padTextField(
                                                           child: searchDropDown(
                                                             selectedItem:
-                                                                _selectDistrict,
+                                                                _selectDistrict!,
                                                             itemList:
-                                                                _districtValues,
+                                                                _districtValues!,
                                                             hint:
                                                                 'Select District',
                                                             value:
@@ -576,7 +576,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                                                 0xFFFF6E18),
                                                             title: 'Back',
                                                             onPressed: () {
-                                                              pageController.previousPage(
+                                                              pageController!.previousPage(
                                                                   duration: Duration(
                                                                       milliseconds:
                                                                           300),
@@ -666,11 +666,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 }
 
-Widget oPDotIndicator({bool isActive}) {
+Widget oPDotIndicator({bool? isActive}) {
   return AnimatedContainer(
     duration: Duration(milliseconds: 150),
     margin: EdgeInsets.symmetric(horizontal: 4.0),
-    height: isActive ? 10.0 : 8.0,
+    height: isActive! ? 10.0 : 8.0,
     width: isActive ? 10.0 : 8.0,
     decoration: BoxDecoration(
       color: isActive ? t3_colorPrimary : Colors.grey.withOpacity(0.5),

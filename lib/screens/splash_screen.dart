@@ -49,7 +49,7 @@ class SplashScreen extends StatelessWidget {
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      'MIR ABDUL QUDDUS BIZENJO',
+                      'SARFARAZ AHMED BUGTI',
                       style: TextStyle(
                           fontFamily: fontTekoBold,
                           color: t3_colorPrimary,
